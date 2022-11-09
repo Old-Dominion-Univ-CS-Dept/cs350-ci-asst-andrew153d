@@ -1,0 +1,3 @@
+rootProject.name = 'gradle-assignment-andrew153d'
+include('project')
+//settings
