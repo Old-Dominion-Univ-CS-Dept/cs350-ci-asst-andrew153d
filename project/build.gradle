@@ -20,3 +20,65 @@ test {
      ignoreFailures = true
      useJUnitPlatform()
 }
+
+task copyWebPages (type: Copy) {
+    from 'src/main/html'
+    into 'build/reports'
+}
+
+task copyDocs (type: Copy) {
+    from 'build/docs'
+    into 'build/reports/'
+    dependsOn 'javadoc'
+}
+
+task reports (dependsOn: ['javadoc', 'test','copyWebPages', 'copyDocs']) {
+    description 'Generate reports website for this project'
+}
+
+////////  Website publication on GitHub pages ///////////////////
+
+
+task clonePages() {
+    doLast {
+        def thisRepo = rootProject.projectDir.toString()
+        def pagesDir = "$buildDir/gh-pages"
+        mkdir pagesDir
+        project.delete {
+            delete pagesDir
+        }
+        exec {
+            workingDir = '.'
+            commandLine = ['git', 'clone', 'file://' + thisRepo, '-b', 'gh-pages', pagesDir]
+        }
+    }
+}
+
+task copyReports (type: Copy, dependsOn: ['reports', 'clonePages']) {
+    doLast {
+        ant.copy (todir: pagesDir) {
+            fileset(dir: 'build/reports/')
+        }
+    }
+}
+
+task updateGHPages (dependsOn: 'copyReports') {
+    group = "Reporting"
+    description  'Copies reports to the gh-pages branch in preparation for a future push to GitHub'
+    doLast {
+        def pagesDir = "$buildDir/gh-pages"
+        exec {
+            workingDir = pagesDir
+            commandLine = ['git', 'add', '.']
+        }
+        exec {
+            workingDir = pagesDir
+            commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+        }
+        exec {
+            workingDir = pagesDir
+            commandLine = ['git', 'push', 'origin', 'gh-pages']
+        }
+    }
+}
+
