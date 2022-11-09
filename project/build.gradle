@@ -62,7 +62,7 @@ task copyReports (type: Copy, dependsOn: ['reports', 'clonePages']) {
     }
 }
 
-task updateGHPages (dependsOn: 'copyReports') {
+task deployReports (dependsOn: 'copyReports') {
     group = "Reporting"
     description  'Copies reports to the gh-pages branch in preparation for a future push to GitHub'
     doLast {
