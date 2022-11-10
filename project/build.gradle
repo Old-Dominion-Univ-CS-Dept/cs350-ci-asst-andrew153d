@@ -57,10 +57,10 @@ task clonePages(dependsOn: deleteGHPages) {
 }
 
 task copyReports (type: Copy, dependsOn: ['clonePages', 'reports']) {
-    doLast {
+    
         from 'build/reports/'
-        into pagesDir
-    }
+        into 'build/gh-pages/reports/'
+    
 }
 
 task deployReports (dependsOn: 'copyReports') {
@@ -71,6 +71,10 @@ task deployReports (dependsOn: 'copyReports') {
         exec {
             workingDir = pagesDir
             commandLine = ['git', 'add','.']
+        }
+        exec {
+            workingDir = pagesDir
+            commandLine = ['git', 'status']
         }
         exec {
             workingDir = pagesDir
