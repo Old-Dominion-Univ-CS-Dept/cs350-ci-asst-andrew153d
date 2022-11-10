@@ -23,7 +23,7 @@ jobs:
       timeout-minutes: 20
       run: ../gradlew build
     - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: andrew153d/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           folder: build/reports
