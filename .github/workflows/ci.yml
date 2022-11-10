@@ -22,9 +22,8 @@ jobs:
       working-directory: ./project
       timeout-minutes: 20
       run: ../gradlew build
-    - name: Deploy
-        uses: andrew153d/github-pages-deploy-action@v4.2.5
-        with:
-          branch: gh-pages
-          folder: build/reports
+    - name: Update Website
+      working-directory: ./project
+      timeout-minutes: 20
+      run: ../gradlew deployReports
       
