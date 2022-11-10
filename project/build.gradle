@@ -50,7 +50,7 @@ task clonePages() {
         }
         exec {
             workingDir = '.'
-            commandLine = ['git', 'clone', thisRepo, '-b', 'gh-pages', pagesDir]
+            commandLine = ['cmd' ,'git', 'clone', thisRepo, '-b', 'gh-pages', pagesDir]
         }
     }
 }
