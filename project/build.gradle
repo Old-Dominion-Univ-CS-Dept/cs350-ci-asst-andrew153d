@@ -44,9 +44,8 @@ task clonePages() {
         def thisRepo = rootProject.projectDir.toString()
         def pagesDir = "$buildDir/gh-pages"
         mkdir pagesDir
-        exec {
-            workingDir = '.'
-            commandLine = ['rm', '-rf', pagesDir]
+        project.delete {
+            delete pagesDir
         }
         exec {
             workingDir = '.'
