@@ -2,7 +2,7 @@ name: CI - build and test
 
 on:                                
   push:
-    branches: [ main, gh-pages]
+    branches: [ main]
 
 jobs:
   build:                           
@@ -24,6 +24,6 @@ jobs:
       run: ../gradlew build
     - name: Update Website
       working-directory: ./project
-      timeout-minutes: 20
+      timeout-minutes: 5
       run: ../gradlew deployReports
       
