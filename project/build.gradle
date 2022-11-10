@@ -56,7 +56,7 @@ task clonePages(dependsOn: deleteGHPages) {
     }
 }
 
-task copyReports (type: Copy, dependsOn: ['reports', 'clonePages']) {
+task copyReports (type: Copy, dependsOn: ['clonePages', 'reports']) {
     doLast {
         from 'build/reports/'
         into pagesDir
