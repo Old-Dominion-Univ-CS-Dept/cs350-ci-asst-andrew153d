@@ -177,7 +177,7 @@ public class TestDuration {
  	 	assertEquals(1,1);
 	}
 	void setResult(int totalSeconds) {
-		secondsPerMinute = 60;
+		secondsPerMinute =  60;
 		secondsPerHour = 60*60;
 		secondsPerDay = 60*60*24; 
 		resultDays = totalSeconds/secondsPerDay;
