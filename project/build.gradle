@@ -28,7 +28,7 @@ task copyWebPages (type: Copy) {
 
 task copyDocs (type: Copy) {
     from 'build/docs'
-    into 'build/reports/'
+    into 'build/reports'
     dependsOn 'javadoc'
 }
 
@@ -37,19 +37,21 @@ task reports (dependsOn: ['javadoc', 'test','copyWebPages', 'copyDocs']) {
 }
 
 ////////  Website publication on GitHub pages ///////////////////
-
-
-task clonePages() {
-    doLast {
-        def thisRepo = rootProject.projectDir.toString()
+task deleteGHPages(){
         def pagesDir = "$buildDir/gh-pages"
         mkdir pagesDir
         project.delete {
             delete pagesDir
         }
+}
+
+task clonePages(dependsOn: deleteGHPages) {
+    doLast {
+        def thisRepo = rootProject.projectDir.toString()
+        def pagesDir = "$buildDir/gh-pages"
         exec {
             workingDir = '.'
-            commandLine = ['git', 'clone', 'file://' + thisRepo, '-b', 'gh-pages', pagesDir]
+            commandLine = ['git', 'clone', 'git@github.com:Old-Dominion-Univ-CS-Dept/cs350-ci-asst-andrew153d.git', '-b', 'gh-pages', pagesDir]
         }
     }
 }
