@@ -49,21 +49,15 @@ task clonePages() {
         }
         exec {
             workingDir = '.'
-            commandLine = ['git', 'clone',thisRepo, pagesDir]
-        }
-
-        exec {
-            workingDir = pagesDir
-            commandLine = ['git', 'checkout', 'gh-pages']
+            commandLine = ['git', 'clone',thisRepo, '-b', 'gh-pages', pagesDir]
         }
     }
 }
 
 task copyReports (type: Copy, dependsOn: ['reports', 'clonePages']) {
     doLast {
-        ant.copy (todir: pagesDir) {
-            fileset(dir: 'build/reports/')
-        }
+        from 'build/reports/'
+        into pagesDir
     }
 }
 
@@ -74,11 +68,11 @@ task deployReports (dependsOn: 'copyReports') {
         def pagesDir = "$buildDir/gh-pages"
         exec {
             workingDir = pagesDir
-            commandLine = ['git', 'add', '.']
+            commandLine = ['git', 'add','.']
         }
         exec {
             workingDir = pagesDir
-            commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+            commandLine = ['git', 'commit', '--allow-empty', '-m', 'Updating-webpages']
         }
         exec {
             workingDir = pagesDir
