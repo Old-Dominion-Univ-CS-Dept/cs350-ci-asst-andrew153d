@@ -22,7 +22,7 @@ jobs:
       working-directory: ./project
       timeout-minutes: 20
       run: ../gradlew build
-    - name: Build and test
+    - name: Update Website
       working-directory: ./project
       timeout-minutes: 20
       run: ../gradlew deployReports
