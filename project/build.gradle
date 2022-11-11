@@ -52,8 +52,8 @@ task clonePages(dependsOn: deleteGHPages) {
         def pagesDir = "$buildDir/gh-pages"
         exec {
             workingDir = '.'
-            commandLine = ['git', 'clone', 'file://' + thisRepo, '-b', 'gh-pages', pagesDir]
-            //commandLine = ['git', 'clone', 'git@github.com:Old-Dominion-Univ-CS-Dept/cs350-ci-asst-andrew153d.git', '-b', 'gh-pages', pagesDir]
+            //commandLine = ['git', 'clone', 'file://' + thisRepo, '-b', 'gh-pages', pagesDir]
+            commandLine = ['git', 'clone', 'git@github.com:Old-Dominion-Univ-CS-Dept/cs350-ci-asst-andrew153d.git', '-b', 'gh-pages', pagesDir]
             
         }
     }
