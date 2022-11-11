@@ -85,7 +85,7 @@ task deployReports (dependsOn: 'copyReports') {
         }
         exec {
             workingDir = pagesDir
-            commandLine = ['git', 'push', 'origin', 'gh-pages']
+            commandLine = ['git', 'push', '-u' ,'origin', 'gh-pages']
         }
     }
 }
