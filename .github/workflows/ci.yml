@@ -25,5 +25,5 @@ jobs:
     - name: Update Website
       working-directory: ./project
       timeout-minutes: 5
-      run: ../gradlew deployReports
+      run: ../gradlew deleteGHPages
       
