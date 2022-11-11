@@ -172,7 +172,10 @@ public class TestDuration {
 		assertTrue(testDur.equals(new Duration(1951973)));
 	}
 	*/
-	
+	@Test
+		public final void easyPass1() {
+ 	 	assertEquals(1,1);
+	}
 	@Test
 		public final void easyPass1() {
  	 	assertEquals(1,1);

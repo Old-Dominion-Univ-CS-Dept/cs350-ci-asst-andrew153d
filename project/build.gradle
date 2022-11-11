@@ -60,7 +60,7 @@ task clonePages(dependsOn: deleteGHPages) {
 task copyReports (type: Copy, dependsOn: ['clonePages', 'reports']) {
     
         from 'build/reports/'
-        into 'build/gh-pages/reports/'
+        into 'build/gh-pages/reports'
     
 }
 
