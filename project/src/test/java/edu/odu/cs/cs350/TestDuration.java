@@ -180,6 +180,10 @@ public class TestDuration {
 		public final void easyPass2() {
  	 	assertEquals(1,1);
 	}
+	@Test
+	public final void easyPass2() {
+	  assertEquals(1,1);
+}
 	
 	void setResult(int totalSeconds) {
 		secondsPerMinute =  60;
