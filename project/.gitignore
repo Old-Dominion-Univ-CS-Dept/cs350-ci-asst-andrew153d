@@ -1,8 +1,0 @@
-# Compiled class file
-**/*.class
-**/*.project
-**/*.classpath
-**/bin
-**/build
-**/*.jar
-**/.settings
