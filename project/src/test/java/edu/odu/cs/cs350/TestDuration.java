@@ -177,7 +177,7 @@ public class TestDuration {
  	 	assertEquals(1,1);
 	}
 	@Test
-		public final void easyPass2() {
+		public final void easyPass3() {
  	 	assertEquals(1,1);
 	}
 	@Test
