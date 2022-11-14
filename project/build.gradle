@@ -21,72 +21,47 @@ test {
      useJUnitPlatform()
 }
 
-task copyWebPages (type: Copy) {
-    from 'src/main/html'
-    into 'build/reports'
+reportStats {
+    reportsURL = 'https://old-dominion-univ-cs-dept.github.io/cs350-ci-asst-andrew153d/'
+    htmlSourceDir = file('src/main/html')
+    reportsDir = file('build/reports')
 }
 
-task copyDocs (type: Copy) {
-    from 'build/docs'
-    into 'build/reports'
-    dependsOn 'javadoc'
+task reports (dependsOn: ['javadoc', 'test']) {
+   doLast() {
+      copy {
+         from(file('build/docs'))
+         into(file('build/reports'))
+      }
+   
+      copy {
+         from(file('src/main/html'))
+         into(file('build/reports'))
+	  }
+   }
 }
 
-task reports (dependsOn: ['javadoc', 'test','copyWebPages', 'copyDocs']) {
-    description 'Generate reports website for this project'
-}
+task deployReports (dependsOn: 'reports') {
 
-////////  Website publication on GitHub pages ///////////////////
-task deleteGHPages(){
-        def pagesDir = "$buildDir/gh-pages"
-        mkdir pagesDir
-        project.delete {
-            delete pagesDir
-        }
+	doLast {
+	
+		copy {
+         from(file('build/reports'))
+         into(file('build/gh-pages'))
+		}
+	  
+		def pagesDir = "$buildDir/gh-pages"
+		exec {
+			workingDir = pagesDir
+			commandLine = ['git', 'add', '.']
+		}
+		exec {
+			workingDir = pagesDir
+			commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+		}
+		exec {
+			workingDir = pagesDir
+			commandLine = ['git', 'push']
+		}
+	}
 }
-
-task clonePages(dependsOn: deleteGHPages) {
-    doLast {
-        def thisRepo = rootProject.projectDir.toString()
-       
-        def pagesDir = "$buildDir/gh-pages"
-        exec {
-            workingDir = '.'
-            commandLine = ['git', 'clone', 'file://' + thisRepo, '-b', 'gh-pages', pagesDir]
-            //commandLine = ['git', 'clone', 'git@github.com:Old-Dominion-Univ-CS-Dept/cs350-ci-asst-andrew153d.git', '-b', 'gh-pages', pagesDir]
-            
-        }
-    }
-}
-
-task copyReports (type: Copy, dependsOn: ['clonePages', 'reports']) {
-    
-        from 'build/reports/'
-        into 'build/gh-pages/reports'
-    
-}
-
-task deployReports (dependsOn: 'copyReports') {
-    group = "Reporting"
-    description  'Copies reports to the gh-pages branch in preparation for a future push to GitHub'
-    doLast {
-        def pagesDir = "$buildDir/gh-pages"
-        exec {
-            workingDir = pagesDir
-            commandLine = ['git', 'add','.']
-        }
-        exec {
-            workingDir = pagesDir
-            commandLine = ['git', 'status']
-        }
-        exec {
-            workingDir = pagesDir
-            commandLine = ['git', 'commit', '--allow-empty', '-m', 'Updating-webpages']
-        }
-        exec {
-            workingDir = pagesDir
-            commandLine = ['git', 'push', '-u' ,'origin', 'gh-pages']
-        }
-    }
-}
-
