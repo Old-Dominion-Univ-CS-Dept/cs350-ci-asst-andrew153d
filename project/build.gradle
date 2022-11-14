@@ -38,7 +38,7 @@ task reports (dependsOn: ['javadoc', 'test']) {
    doLast() {
       copy {
          from(file('build/docs'))
-         into(file('build/reports/reports'))
+         into(file('build/reports'))
       }
    
       copy {
@@ -53,8 +53,12 @@ task deployReports (dependsOn: 'reports') {
 	doLast {
 	
 		copy {
-         from(file('build/reports'))
+         from(file('build/reports/index.md'))
          into(file('build/gh-pages'))
+		}
+      copy {
+         from(file('build/reports'))
+         into(file('build/gh-pages/reports'))
 		}
 	  
 		def pagesDir = "$buildDir/gh-pages"
