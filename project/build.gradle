@@ -27,6 +27,12 @@ test {
     htmlSourceDir = file('src/main/html')
     reportsDir = file('build/reports')
 }*/
+javadoc {
+   options.with {
+     links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
+   }
+   failOnError = false;
+}
 
 task reports (dependsOn: ['javadoc', 'test']) {
    doLast() {
