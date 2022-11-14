@@ -38,7 +38,7 @@ task reports (dependsOn: ['javadoc', 'test']) {
    doLast() {
       copy {
          from(file('build/docs'))
-         into(file('build/reports'))
+         into(file('build/reports/reports'))
       }
    
       copy {
