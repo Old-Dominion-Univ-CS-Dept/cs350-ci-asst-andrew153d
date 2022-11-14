@@ -47,33 +47,3 @@ task reports (dependsOn: ['javadoc', 'test']) {
 	  }
    }
 }
-
-task deployReports (dependsOn: 'reports') {
-
-	doLast {
-	
-		copy {
-         from(file('build/reports/index.md'))
-         into(file('build/gh-pages'))
-		}
-      
-      copy {
-         from(file('build/reports'))
-         into(file('build/gh-pages/reports'))
-		}
-	  
-		def pagesDir = "$buildDir/gh-pages"
-		exec {
-			workingDir = pagesDir
-			commandLine = ['git', 'add', '.']
-		}
-		exec {
-			workingDir = pagesDir
-			commandLine = ['git', 'commit', '-m', 'Updating-webpages']
-		}
-		exec {
-			workingDir = pagesDir
-			commandLine = ['git', 'push']
-		}
-	}
-}
